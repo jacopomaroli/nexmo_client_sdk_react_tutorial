@@ -1,10 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { activateMsg, closeMsg } from './redux'
+
 import { useAuth0 } from '@auth0/auth0-react'
 import NexmoLoginWrapper from './components/NexmoLoginWrapper'
 
 import './App.css'
 
-function App () {
+const App = (props) => {
   const res = useAuth0()
   const {
     isLoading,
@@ -26,6 +29,19 @@ function App () {
   if (isAuthenticated) {
     return (
       <div className='App'>
+        <h1>{props.msg.title || 'Hello World!'}</h1>
+
+        {props.msg.title ? (
+          <button onClick={props.closeMsg}>Exit Redux</button>
+        ) : (
+          <button
+            onClick={() =>
+              props.activateMsg({ title: 'Hello from redux!' })}
+          >
+            Click Me!
+          </button>
+        )}
+
         <button onClick={() => logout({ returnTo: window.location.origin })}>
           Log out
         </button>
@@ -38,4 +54,18 @@ function App () {
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  msg: state.msg
+})
+
+const mapDispatchToProps = {
+  activateMsg,
+  closeMsg
+}
+
+const AppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
+
+export default AppContainer

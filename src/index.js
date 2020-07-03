@@ -1,18 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
+import AppContainer from './App'
 import * as serviceWorker from './serviceWorker'
 import { Auth0Provider } from '@auth0/auth0-react'
+import { Provider } from 'react-redux'
+import { store } from './redux'
 
 ReactDOM.render(
-  <Auth0Provider
-    domain='jacopo-nexmo.eu.auth0.com'
-    clientId='dc2J5H6VwKzJmqOVgh0CDnditfZcrqny'
-    redirectUri={window.location.origin}
-  >
-    <App />
-  </Auth0Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <Auth0Provider
+        domain='jacopo-nexmo.eu.auth0.com'
+        clientId='dc2J5H6VwKzJmqOVgh0CDnditfZcrqny'
+        redirectUri={window.location.origin}
+      >
+        <AppContainer />
+      </Auth0Provider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 )
 
