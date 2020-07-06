@@ -29,9 +29,11 @@ export function createRoom (nexmoClient, roomName) {
     dispatch(createRoomRequest())
     try {
       const conversationData = { name: roomName }
-      const response = await nexmoClient.application.newConversation(conversationData)
-      console.log(response)
-      dispatch(createRoomSuccess(response.data))
+      const conversation = await nexmoClient.application.newConversation(conversationData)
+      console.log(conversation)
+      const member = await conversation.join()
+      console.log(member)
+      dispatch(createRoomSuccess(member))
     } catch (error) {
       dispatch(createRoomError(error))
     }
@@ -62,22 +64,32 @@ export function joinRoomError (error) {
   }
 }
 
-export function joinRoom (nexmoClient, roomId) {
+export function joinRoom (nexmoClientContext, roomId) {
+  const nexmoClient = nexmoClientContext.nexmoClient
   return async function (dispatch) {
     dispatch(joinRoomRequest())
     try {
-      console.log(nexmoClient.application)
+      // console.log(nexmoClient.application)
       const conversations = await nexmoClient.application.getConversations()
-      console.log(conversations)
-      const conversation = await nexmoClient.application.getConversation(roomId)
-      debugger
-      // const conversation = Array.from(nexmoClient.application.conversations_page_last.application.conversations.values()).find(e => e.name === roomId)
+      // console.log(conversations)
+      // const conversation = await nexmoClient.application.getConversation(roomId)
+      // debugger
+      const conversation = Array.from(nexmoClient.application.conversations.values()).find(e => e.name === roomId)
       // if (!conversation) throw new Error('Can\'t find conversation')
-      console.log(conversation)
-      console.log(nexmoClient.application.me)
-      const member = await conversation.join()
-      console.log(member)
-      dispatch(joinRoomSuccess(member))
+      // console.log(conversation)
+      // console.log(nexmoClient.application.me)
+      // const member = await conversation.join()
+      nexmoClientContext.selectConversation(conversation)
+      const member = conversation.me
+      // console.log(member)
+      const payload = {
+        room: {
+          name: conversation.name,
+          id: conversation.id
+        },
+        username: member.id
+      }
+      dispatch(joinRoomSuccess(payload))
     } catch (error) {
       dispatch(joinRoomError(error))
     }

@@ -25,9 +25,38 @@ const NexmoClientProvider = ({ children }) => {
     nexmoApp.on('*', (event, evt) => {
       console.log('event: ', event, evt)
       console.log('nexmoApp.activeStreams.length ', nexmoApp.activeStreams.length)
+      const payload = JSON.parse(evt)
+      dispatch(updateChatLog(payload))
     })
 
     loginState = LOGIN_DONE
+  }
+
+  const selectConversation = (conversation) => {
+    conversation.on('text', function (sender, textEvent) {
+      if (textEvent.cid === conversation.id) {
+        // if (rtc.isVisible) { textEvent.seen(); }
+        // console.log('my message was:', textEvent, sender)
+        const payload = {
+          roomId: conversation.id,
+          data: {
+            message: textEvent.body.text,
+            username: sender.id
+          }
+        }
+        dispatch(updateChatLog(payload))
+      } else {
+        // console.log('got a message from another member:', textEvent, sender)
+        const payload = {
+          roomId: conversation.id,
+          data: {
+            message: textEvent.body.text,
+            username: sender.id
+          }
+        }
+        dispatch(updateChatLog(payload))
+      }
+    })
   }
 
   const sendText = (conversation, message) => {
@@ -35,7 +64,7 @@ const NexmoClientProvider = ({ children }) => {
       roomId: conversation.id,
       data: message
     }
-    conversation.sendText(message)
+    conversation.sendText(message.message)
     dispatch(updateChatLog(payload))
   }
 
@@ -44,7 +73,8 @@ const NexmoClientProvider = ({ children }) => {
     nexmoClientContext = {
       nexmoClient,
       login,
-      sendText
+      sendText,
+      selectConversation
     }
   }
 

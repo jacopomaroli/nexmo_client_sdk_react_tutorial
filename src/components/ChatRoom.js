@@ -7,21 +7,20 @@ function ChatRoom () {
   const [usernameInput, setUsernameInput] = useState('')
   const [msgInput, setMsgInput] = useState('')
 
-  const room = useSelector(state => state.room)
-  const username = useSelector(state => state.username)
-  const chats = useSelector(state => state.chatLog)
+  const room = useSelector(state => state.chatReducer.room)
+  const username = useSelector(state => state.chatReducer.username)
+  const chats = useSelector(state => state.chatReducer.chatLog)
 
   const dispatch = useDispatch()
-  const nexmoClient = useContext(NexmoClientContext)
-  console.log(nexmoClient)
-  // login(nexmoClient.ws)
+  const nexmoClientContext = useContext(NexmoClientContext)
 
   function enterRooom () {
     dispatch(setUsername(usernameInput))
   }
 
   const sendText = () => {
-    nexmoClient.sendText(room.id, {
+    const conversation = nexmoClientContext.nexmoClient.application.conversations.get(room.id)
+    nexmoClientContext.sendText(conversation, {
       username: username,
       message: msgInput
     })

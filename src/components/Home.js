@@ -20,7 +20,7 @@ function Home ({ token }) {
   const [roomId, setRoomId] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('447418343258')
   const [conversationList, setConversationList] = useState([])
-  const currentRoom = useSelector(state => state.room)
+  const currentRoom = useSelector(state => state.chatReducer.room)
 
   const dispatch = useDispatch()
 
@@ -47,7 +47,7 @@ function Home ({ token }) {
           <div>
             <span>Join existing room</span>
             <input type='text' placeholder='Room code' value={roomId} onChange={(e) => setRoomId(e.target.value)} />
-            <button onClick={() => dispatch(joinRoom(nexmoClientContext.nexmoClient, roomId))}>Join</button>
+            <button onClick={() => dispatch(joinRoom(nexmoClientContext, roomId))}>Join</button>
           </div>
           <ul>
             {[...conversationList.values()].map(function (conversation, index) {

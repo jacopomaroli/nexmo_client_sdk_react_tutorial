@@ -13,26 +13,34 @@ export default function chatReducer (state, action) {
 
   switch (action.type) {
     case CREATE_ROOM_SUCCESS:
-      state.room = action.payload
-      break
+      return {
+        ...state,
+        room: action.payload.room
+      }
 
     case JOIN_ROOM_SUCCESS:
-      state.room = action.payload
-      break
+      return {
+        ...state,
+        room: action.payload.room,
+        username: action.payload.username
+      }
 
     case SET_USERNAME:
-      state.username = action.username
-      break
+      return {
+        ...state,
+        username: action.payload.username
+      }
 
     case UPDATE_CHAT_LOG:
       if (state.room !== null && action.update.roomId === state.room.id) {
-        state.chatLog = [...state.chatLog, action.update.data]
+        return {
+          ...state,
+          chatLog: [...state.chatLog, action.update.data]
+        }
       }
-      break
+      return state
 
     default:
       return state
   }
-
-  return state
 }
