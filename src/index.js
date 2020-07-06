@@ -4,8 +4,9 @@ import './index.css'
 import AppContainer from './App'
 import * as serviceWorker from './serviceWorker'
 import { Auth0Provider } from '@auth0/auth0-react'
+import { NexmoClientProvider } from './components/NexmoClient'
 import { Provider } from 'react-redux'
-import { store } from './redux'
+import { store } from './store'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.render(
         clientId='dc2J5H6VwKzJmqOVgh0CDnditfZcrqny'
         redirectUri={window.location.origin}
       >
-        <AppContainer />
+        <NexmoClientProvider>
+          <AppContainer />
+        </NexmoClientProvider>
       </Auth0Provider>
     </Provider>
   </React.StrictMode>,

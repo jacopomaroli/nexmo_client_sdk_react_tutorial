@@ -1,6 +1,6 @@
 import React from 'react'
 import Async from 'react-async'
-import NexmoClientWidget from './NexmoClientWidget'
+import Home from './Home'
 
 class NexmoLoginWrapper extends React.Component {
   constructor (props) {
@@ -25,22 +25,13 @@ class NexmoLoginWrapper extends React.Component {
 
   render () {
     return (
-      <div className='card'>
-        <Async promiseFn={this.getNexmoJWT}>
-          {({ data, err, isLoading }) => {
-            if (isLoading) return 'Loading...'
-            if (err) return `Something went wrong: ${err.message}`
-
-            if (data) {
-              return (
-                <>
-                  <NexmoClientWidget token={data.nexmoJWT} />
-                </>
-              )
-            }
-          }}
-        </Async>
-      </div>
+      <Async promiseFn={this.getNexmoJWT}>
+        {({ data, err, isLoading }) => {
+          if (isLoading) return 'Loading...'
+          if (err) return `Something went wrong: ${err.message}`
+          if (data) return <Home token={data.nexmoJWT} />
+        }}
+      </Async>
     )
   }
 }
