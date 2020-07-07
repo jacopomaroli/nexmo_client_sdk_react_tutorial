@@ -8,7 +8,7 @@
     "start:server": "netlify-lambda serve functions",
     "start:mock-server": "cd backend; npm run start:local",
     "build": "npm-run-all --parallel build:**",
-    "build:app": "react-scripts build",
+    "build:app": "CI=false react-scripts build",
     "build:functions": "netlify-lambda build backend/functions",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

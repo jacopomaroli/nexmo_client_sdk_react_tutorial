@@ -70,7 +70,8 @@ export function joinRoom (nexmoClientContext, roomId) {
     dispatch(joinRoomRequest())
     try {
       // console.log(nexmoClient.application)
-      const conversations = await nexmoClient.application.getConversations()
+      await nexmoClient.application.getConversations()
+      // const conversations = await nexmoClient.application.getConversations()
       // console.log(conversations)
       // const conversation = await nexmoClient.application.getConversation(roomId)
       // debugger
