@@ -12,8 +12,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain='jacopo-nexmo.eu.auth0.com'
-        clientId='dc2J5H6VwKzJmqOVgh0CDnditfZcrqny'
+        domain={process.env.AUTH0_DOMAIN}
+        clientId={process.env.AUTH0_CLIENT_ID}
         redirectUri={window.location.origin}
       >
         <NexmoClientProvider>

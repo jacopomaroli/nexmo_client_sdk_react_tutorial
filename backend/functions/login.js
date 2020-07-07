@@ -46,8 +46,6 @@ const debugACL = {
   }
 }
 
-console.log('JWKS_URI:' + process.env.JWKS_URI)
-
 const client = jwksClient({
   strictSsl: true, // Default value
   jwksUri: process.env.JWKS_URI,
@@ -70,7 +68,7 @@ function getKey (header, callback) {
   })
 }
 
-async function main (event, context, callback) {
+async function main (event, context) {
   const { jwt: token } = JSON.parse(event.body)
   const decoded = await verifyJWT(token, getKey)
 
@@ -85,20 +83,23 @@ async function main (event, context, callback) {
   }
   const nexmoJWT = tokenGenerator(tokenParams)
 
-  callback(null, {
-    statusCode: 200,
-    body: JSON.stringify({ nexmoJWT })
-  })
+  return { nexmoJWT }
 }
 
-async function gCatcher (event, context, callback) {
+async function gCatcher (event, context) {
   try {
-    await main(event, context, callback)
-  } catch (e) {
-    callback(null, {
+    const response = await main(event, context)
+    console.log('success', response)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response)
+    }
+  } catch (error) {
+    console.log('error', error)
+    return {
       statusCode: 500,
-      body: JSON.stringify({ error: e })
-    })
+      body: JSON.stringify(error)
+    }
   }
 }
 
