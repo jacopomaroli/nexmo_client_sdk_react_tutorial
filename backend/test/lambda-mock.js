@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const cors = require('cors')
-const dotenv = require('dotenv').config({ path: '.env' })
+const dotenv = require('dotenv').config({ path: '../.env' })
 
 process.env = { ...process.env, ...dotenv.parsed }
 

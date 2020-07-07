@@ -72,11 +72,11 @@ async function main (event, context, callback) {
   const { jwt: token } = JSON.parse(event.body)
   const decoded = await verifyJWT(token, getKey)
 
-  const privateKey = Buffer.from(process.env.APP_PRIV_KEY_B64, 'base64').toString('utf-8')
+  const privateKey = Buffer.from(process.env.NEXMO_APP_PRIV_KEY_B64, 'base64').toString('utf-8')
 
   const tokenParams = {
-    iss_name: process.env.JTW_ISS_NAME,
-    app_id: process.env.APP_ID,
+    iss_name: process.env.NEXMO_JTW_ISS_NAME,
+    app_id: process.env.NEXMO_APP_ID,
     private_key: privateKey,
     username: decoded.nickname,
     acl: debugACL

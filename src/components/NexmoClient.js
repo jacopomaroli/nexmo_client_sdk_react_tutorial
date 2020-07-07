@@ -25,7 +25,9 @@ const NexmoClientProvider = ({ children }) => {
     nexmoApp.on('*', (event, evt) => {
       console.log('event: ', event, evt)
       console.log('nexmoApp.activeStreams.length ', nexmoApp.activeStreams.length)
-      const payload = JSON.parse(evt)
+      const payload = {
+        data: evt
+      }
       dispatch(updateChatLog(payload))
     })
 

@@ -7,13 +7,13 @@
     "test": "test"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.8.0"
   },
   "devDependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "eslint": "^7.2.0",
     "eslint-config-standard": "^14.1.1",
@@ -26,10 +26,8 @@
     "npm-run-all": "^4.1.5"
   },
   "scripts": {
-    "start": "npm-run-all --parallel start:server",
-    "start:server": "netlify-lambda serve functions",
-    "build": "npm-run-all --parallel build:**",
-    "build:functions": "netlify-lambda build functions",
+    "start": "netlify-lambda serve functions",
+    "build": "netlify-lambda build functions",
     "start:local": "node test/lambda-mock.js"
   },
   "author": "",
