@@ -15,7 +15,7 @@ const config = {
 }
 
 async function applicationSetup ({ config }) {
-  const { siteUrl, applicationId, applicationName, nexmoAccount, apiKey, apiSecret } = config
+  const { siteUrl, applicationId, applicationName, apiKey, apiSecret } = config
   const devAPIToken = Buffer.from(`${apiKey}:${apiSecret}`, 'utf-8').toString('base64')
 
   const { data, status } = await axios({
@@ -40,8 +40,7 @@ async function applicationSetup ({ config }) {
     },
     headers: { Authorization: `basic ${devAPIToken}` }
   })
-  console.log(data)
-  console.log(status)
+  console.log(JSON.stringify(data, null, 2))
 }
 
 applicationSetup({ config })

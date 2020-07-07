@@ -2,7 +2,7 @@ const ncco = []
 
 ncco[0] = async function (event, context) {
   const parsedContext = extractNetlifySiteFromContext(context)
-  const { to = 'unknown', from = 'unknown', uuid, conversation_uuid } = event.body
+  const { to = 'unknown', from = 'unknown', uuid, conversation_uuid } = event.queryStringParameters
   const ncco = [
     /* {
         "action": "talk",
@@ -31,7 +31,7 @@ ncco[0] = async function (event, context) {
         maxDigits: 4,
         timeOut: 5
       },
-      eventUrl: [`${parsedContext.site_url}/ncco?id=1`]
+      eventUrl: [`${parsedContext.site_url}/.netlify/functions/ncco?id=1`]
     }
   ]
   return ncco
