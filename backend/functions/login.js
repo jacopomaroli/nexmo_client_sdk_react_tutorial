@@ -48,7 +48,7 @@ const debugACL = {
 
 const client = jwksClient({
   strictSsl: true, // Default value
-  jwksUri: process.env.JWKS_URI,
+  jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`,
   requestHeaders: {}, // Optional
   requestAgentOptions: {}, // Optional
   timeout: 30000 // Defaults to 30s

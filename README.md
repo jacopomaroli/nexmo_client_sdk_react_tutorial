@@ -2,7 +2,6 @@ Create a nexmo application and take note of your application_id and private_key.
 
 Follow [this](https://auth0.com/docs/quickstart/spa/react/01-login) guide until you reach `Install the Auth0 React SDK`.
 Take note of `Domain` and `Client ID`.
-Also you'll need the `JSON Web Key Set` you find at the bottom of the Auth0 application settings page when you click `Show Advanced Settings` -> `Endpoints`
 
 You can now [![button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/jacopomaroli/nexmo_client_sdk_react_tutorial) and fill in the required details.
 
