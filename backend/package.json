@@ -28,7 +28,8 @@
   "scripts": {
     "start": "netlify-lambda serve functions",
     "build": "netlify-lambda build functions",
-    "start:local": "node test/lambda-mock.js"
+    "start:local": "node test/lambda-mock.js",
+    "setup:nexmo": "node helpers/setup-nexmo.js"
   },
   "author": "",
   "license": "ISC"

@@ -1,7 +1,8 @@
 const ncco = []
 
 ncco[0] = async function (event, context) {
-  const { to = 'unknown', from = 'unknown', dtmf = -1, uuid, conversation_uuid } = event.body
+  const parsedContext = extractNetlifySiteFromContext(context)
+  const { to = 'unknown', from = 'unknown', uuid, conversation_uuid } = event.body
   const ncco = [
     /* {
         "action": "talk",
@@ -29,16 +30,15 @@ ncco[0] = async function (event, context) {
         submitOnHash: true,
         maxDigits: 4,
         timeOut: 5
-      }
-      // eventUrl: [`${req.protocol}://${req.host}/ncco?id=2`]
+      },
+      eventUrl: [`${parsedContext.site_url}/ncco?id=1`]
     }
   ]
   return ncco
 }
 
-ncco[1] = function (req, res) {
-  const { server_url } = config
-  const { dtmf = -1, speech: { results } } = req.body
+ncco[1] = function (event, context) {
+  const { dtmf = -1, speech: { results } } = event.body
 
   const ncco1 = [
     {
@@ -90,7 +90,7 @@ const getElem = (obj, path) => path.split('.').reduce((o, i) => (typeof o === 'u
 
 function extractNetlifySiteFromContext (context) {
   let decoded = {
-    host: 'http://localhost:9000'
+    site_url: 'http://localhost:9000'
   }
   const data = getElem(context, 'clientContext.custom.netlify')
   if (data) {
@@ -100,15 +100,8 @@ function extractNetlifySiteFromContext (context) {
 }
 
 async function main (event, context) {
-  const { id = 0 } = event.body
-
-  const parsedContext = extractNetlifySiteFromContext(context)
-  console.log(parsedContext)
-  console.log(event)
-  console.log(context)
-
+  const { id = 0 } = event.queryStringParameters
   const response = await ncco[id](event, context)
-
   return response
 }
 
