@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm-run-all --parallel start:app start:server",
     "start:app": "react-scripts start",
-    "start:server": "netlify-lambda serve functions",
+    "start:server": "netlify-lambda serve backend/functions",
     "start:mock-server": "cd backend; npm run start:local",
     "build": "npm-run-all --parallel build:**",
     "build:app": "CI=false react-scripts build",
@@ -56,5 +56,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:9000",
+      "pathRewrite": {
+        "^/\\.netlify/functions": ""
+      }
+    }
   }
 }

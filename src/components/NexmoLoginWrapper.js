@@ -11,7 +11,7 @@ class NexmoLoginWrapper extends React.Component {
   async getNexmoJWT () {
     const claims = await this.props.getIdTokenClaims()
     const auth0Token = claims.__raw
-    const res = await fetch('http://localhost:80/.netlify/functions/login', {
+    const res = await fetch('/.netlify/functions/login', {
       method: 'post',
       headers: {
         Accept: 'application/json',

@@ -46,6 +46,8 @@ const debugACL = {
   }
 }
 
+console.log('JWKS_URI:' + process.env.JWKS_URI)
+
 const client = jwksClient({
   strictSsl: true, // Default value
   jwksUri: process.env.JWKS_URI,
