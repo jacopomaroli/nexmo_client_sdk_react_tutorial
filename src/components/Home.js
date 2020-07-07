@@ -18,7 +18,7 @@ function Home ({ token }) {
   const [username, setUsername] = useState('Anonymous')
   const [roomName, setRoomName] = useState('')
   const [roomId, setRoomId] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('447418343258')
+  const [phoneNumber, setPhoneNumber] = useState(process.env.REACT_APP_NEXMO_PHONE_NUMBER)
   const [conversationList, setConversationList] = useState([])
   const currentRoom = useSelector(state => state.chatReducer.room)
 

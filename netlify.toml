@@ -12,3 +12,4 @@
   NEXMO_APP_ID = "Your nexmo application id"
   NEXMO_APP_PRIV_KEY_B64 = "Your nexmo application private key in base64"
   NEXMO_JTW_ISS_NAME = "The issuer field for the nexmo JWT"
+  REACT_APP_NEXMO_PHONE_NUMBER = "Your nexmo phone number linked to your application"
