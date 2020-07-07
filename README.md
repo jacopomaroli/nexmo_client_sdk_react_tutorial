@@ -1,9 +1,12 @@
 Create a nexmo application and take note of your application_id and private_key.
 
-Follow [this](https://auth0.com/docs/quickstart/spa/react/01-login) guide until you reach `Install the Auth0 React SDK`.
+Follow [this](https://auth0.com/docs/quickstart/spa/react/01-login) guide until you reach `Install the Auth0 React SDK`.  
+**Make sure `Token Endpoint Authentication Method` is set to `none` even if it's disabled**.  
 Take note of `Domain` and `Client ID`.
 
 You can now [![button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/jacopomaroli/nexmo_client_sdk_react_tutorial) and fill in the required details.
+
+Take the website url from netlify and add it in the APP settings on Auth0 in `Allowed Callback URLs` `Allowed Logout URLs` `Allowed Web Origins` (fields are a comma separated url list)
 
 Congrats: you just deployed a nexmo react application :)
 

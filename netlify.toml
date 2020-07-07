@@ -9,6 +9,6 @@
 [template.environment]
   REACT_APP_AUTH0_DOMAIN = "Your Auth0 application domain"
   REACT_APP_AUTH0_CLIENT_ID = "Your Auth0 application client id"
-  NEXMO_NEXMO_APP_ID = "Your nexmo application id"
-  NEXMO_NEXMO_APP_PRIV_KEY_B64 = "Your nexmo application private key in base64"
-  NEXMO_NEXMO_JTW_ISS_NAME = "The issuer field for the nexmo JWT"
+  NEXMO_APP_ID = "Your nexmo application id"
+  NEXMO_APP_PRIV_KEY_B64 = "Your nexmo application private key in base64"
+  NEXMO_JTW_ISS_NAME = "The issuer field for the nexmo JWT"
