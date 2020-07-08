@@ -4,19 +4,15 @@ import { setUsername } from '../actions'
 import { NexmoClientContext } from './NexmoClient'
 
 function ChatRoom () {
-  const [usernameInput, setUsernameInput] = useState('')
   const [msgInput, setMsgInput] = useState('')
 
   const room = useSelector(state => state.chatReducer.room)
   const username = useSelector(state => state.chatReducer.username)
   const chats = useSelector(state => state.chatReducer.chatLog)
 
-  const dispatch = useDispatch()
-  const nexmoClientContext = useContext(NexmoClientContext)
+  const msgInputRef = React.createRef()
 
-  function enterRooom () {
-    dispatch(setUsername(usernameInput))
-  }
+  const nexmoClientContext = useContext(NexmoClientContext)
 
   const sendText = () => {
     const conversation = nexmoClientContext.nexmoClient.application.conversations.get(room.id)
@@ -24,30 +20,27 @@ function ChatRoom () {
       username: username,
       message: msgInput
     })
+    msgInputRef.current.innerHTML = ''
   }
 
   return (
-    <div>
-      <h3>{room.name} ({room.id})</h3>
-      {!username &&
-        <div className='user'>
-          <input type='text' placeholder='Enter username' value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} />
-          <button onClick={enterRooom}>Enter Room</button>
-        </div>}
-      {username &&
-        <div className='room'>
-          <div className='history' style={{ width: '400px', border: '1px solid #ccc', height: '100px', textAlign: 'left', padding: '10px', overflow: 'scroll' }}>
-            {chats.map((c, i) => (
-              <div key={i}><i>{c.username}:</i> {c.message}</div>
-            ))}
-          </div>
-          <div className='control'>
-            <input type='text' value={msgInput} onChange={(e) => setMsgInput(e.target.value)} />
-            <button onClick={sendText}>Send</button>
-          </div>
-        </div>}
-
-    </div>
+    <>
+      <div className='roomName'>{room.name}</div>
+      <div className='historyWrapper'>
+        <div className='history'>
+          {chats.map((c, i) => (
+            <div className='historyEvent' key={i}>
+              <div className='username'>{c.username}</div>
+              <div className='message' dangerouslySetInnerHTML={{ __html: c.message }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='control'>
+        <div className='msgInput' ref={msgInputRef} contentEditable value={msgInput} onInput={(e) => setMsgInput(e.target.innerHTML)} />
+        <button onClick={sendText}><i className='fa fa-paper-plane' aria-hidden='true' /></button>
+      </div>
+    </>
   )
 }
 

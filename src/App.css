@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
-}
+* { margin: 0; padding: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+html { height: 100%; }
+body { height: 100%; }
+#root { display: flex; flex-wrap: wrap; min-height: 100%; }
+#topbar { display: flex; width: 100%; height: 50px; background: #006157; }
+#page { display: flex; width: 100%; height: calc(100vh - 50px); }
+#sidebar { width: 20%; background: #007065; }
+#main { display: flex; flex-direction: column; flex: 1 0 auto; background: #008073; }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+#profilePanelContainer { margin-right: 0; margin-left: auto; position: relative; }
+#profilePanelContainer button:hover { background: #007065; }
+#profilePanelToggler { }
+#profilePanelToggler button { height: 50px; background: none; border: none; outline: none; font-weight: bold; color: #c0c5c5; cursor: pointer; }
+#profilePanelToggler button span { width: 150px; display: inline-block; text-overflow: ellipsis; }
+#profilePanelToggler button img { width: 40px; vertical-align: middle; border-radius: 50%; margin-right: 5px; }
+#profilePanel { margin-right: 0; margin-left: auto; position: relative; background: #006157; border-radius: 0 0 0 7px; overflow: hidden; }
+#profilePanel button { display: block; box-sizing: border-box; padding: 10px 5px; text-align: center; width: 100%; background: none; border: none; outline: none; font-weight: bold; color: #c0c5c5; cursor: pointer; }
+#profilePanel button span{ }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+#callPhone { display: flex; box-sizing: border-box; padding: 10px 15px; color: #c0c5c5; font: 15px/20px inherit; }
+#callPhone input { flex: 1 0 auto; background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; font-size: 20px; }
+#callPhone button { background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; cursor: pointer; font-size: 26px; }
+#newRoom { display: flex; box-sizing: border-box; padding: 10px 15px; color: #c0c5c5; }
+#newRoom input { flex: 1 0 auto; background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; font-size: 20px; }
+#newRoom button { background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; cursor: pointer; font-size: 26px; }
+#roomsList{ }
+#roomsList { list-style: none; }
+#roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; }
+#roomsList button:hover { background: #008073; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+#main .roomName { box-sizing: border-box; padding: 10px 10px; font-weight: bold; color: #c0c5c5; font-size: 22px; }
+#main .historyWrapper { width: 100%; box-sizing: border-box; padding: 10px 10px; overflow-y: scroll; flex: 1 1 auto; display: flex; flex-direction: column-reverse; }
+#main .history { }
+#main .history .historyEvent { color: #c0c5c5; }
+#main .history .historyEvent .username { font-weight: bold; }
+#main .history .historyEvent .message{ }
+#main .control { display: flex; border: 1px solid #00524c; border-radius: 6px; box-sizing: border-box; padding: 10px 10px; margin: 10px; }
+#main .control .msgInput { flex: 1 0 auto; background: none; border: none; outline: none; color: #c0c5c5; }
+#main .control button { background: none; border: none; color: #c0c5c5; cursor: pointer; font-size: 26px; outline: none; }

@@ -28,37 +28,30 @@ function Home ({ token }) {
   doLogin(nexmoClientContext, token, setUsername, setConversationList)
 
   return (
-    <>
-      {!currentRoom &&
-        <div className='create'>
-          <div>
-            Hello: {username}!
-          </div>
-          <div>
-            <span>Call a phone</span>
-            <input type='text' placeholder='Phone number' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-            <button onClick={() => dispatch(ipCall(nexmoClientContext.nexmoClient, phoneNumber))}>Call</button>
-          </div>
-          <div>
-            <span>Create new room</span>
-            <input type='text' placeholder='Room name' value={roomName} onChange={(e) => setRoomName(e.target.value)} />
-            <button onClick={() => dispatch(createRoom(nexmoClientContext.nexmoClient, roomName))}>Create</button>
-          </div>
-          <div>
-            <span>Join existing room</span>
-            <input type='text' placeholder='Room code' value={roomId} onChange={(e) => setRoomId(e.target.value)} />
-            <button onClick={() => dispatch(joinRoom(nexmoClientContext, roomId))}>Join</button>
-          </div>
-          <ul>
-            {[...conversationList.values()].map(function (conversation, index) {
-              return <li key={index}>{conversation.name}</li>
-            })}
-          </ul>
-        </div>}
-
-      {currentRoom &&
-        <ChatRoom />}
-    </>
+    <div id='page'>
+      <div id='sidebar'>
+        <div id='callPhone'>
+          <input type='text' placeholder='Phone number' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          <button onClick={() => dispatch(ipCall(nexmoClientContext.nexmoClient, phoneNumber))}><i className='fa fa-phone' aria-hidden='true' /></button>
+        </div>
+        <div id='newRoom'>
+          <input type='text' placeholder='Room name' value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+          <button onClick={() => dispatch(createRoom(nexmoClientContext.nexmoClient, roomName))}><i className='fa fa-plus' aria-hidden='true' /></button>
+        </div>
+        <ul id='roomsList'>
+          {[...conversationList.values()].map(function (conversation, index) {
+            return (
+              <li key={index}>
+                <button onClick={() => dispatch(joinRoom(nexmoClientContext, conversation.name))}>{conversation.name}</button>
+              </li>)
+          })}
+        </ul>
+      </div>
+      <div id='main'>
+        {currentRoom &&
+          <ChatRoom />}
+      </div>
+    </div>
   )
 }
 

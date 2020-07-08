@@ -88,7 +88,7 @@ export function joinRoom (nexmoClientContext, roomId) {
           name: conversation.name,
           id: conversation.id
         },
-        username: member.id
+        username: member.user.name
       }
       dispatch(joinRoomSuccess(payload))
     } catch (error) {

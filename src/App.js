@@ -28,26 +28,30 @@ const App = (props) => {
 
   if (isAuthenticated) {
     return (
-      <div className='App'>
-        <h1>{props.msg.title || 'Hello World!'}</h1>
-
-        {props.msg.title ? (
-          <button onClick={props.closeMsg}>Exit Redux</button>
-        ) : (
-          <button
-            onClick={() =>
-              props.activateMsg({ title: 'Hello from redux!' })}
-          >
-            Click Me!
-          </button>
-        )}
-
-        <button onClick={() => logout({ returnTo: window.location.origin })}>
-          Log out
-        </button>
-        Hello {user.name}{' '}
+      <>
+        <div id='topbar'>
+          <div id='profilePanelContainer'>
+            <div id='profilePanelToggler'>
+              <button
+                onClick={() =>
+                  props.msg.title
+                    ? props.closeMsg()
+                    : props.activateMsg({ title: 'Hello from redux!' })}
+              >
+                <span>{user.nickname}</span>
+                <img src={user.picture} />
+              </button>
+            </div>
+            {props.msg.title &&
+              <div id='profilePanel'>
+                <button onClick={() => logout({ returnTo: window.location.origin })}>
+                  <span>Log out</span>
+                </button>
+              </div>}
+          </div>
+        </div>
         <NexmoLoginWrapper getIdTokenClaims={getIdTokenClaims} />
-      </div>
+      </>
     )
   } else {
     return <button onClick={loginWithRedirect}>Log in</button>
