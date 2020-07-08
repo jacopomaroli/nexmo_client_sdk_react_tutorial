@@ -39,7 +39,7 @@ const App = (props) => {
                     : props.activateMsg({ title: 'Hello from redux!' })}
               >
                 <span>{user.nickname}</span>
-                <img src={user.picture} />
+                <img src={user.picture} alt='useravatar' />
               </button>
             </div>
             {props.msg.title &&

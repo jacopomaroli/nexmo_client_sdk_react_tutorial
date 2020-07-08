@@ -15,14 +15,16 @@ export default function chatReducer (state, action) {
     case CREATE_ROOM_SUCCESS:
       return {
         ...state,
-        room: action.payload.room
+        room: action.payload.room,
+        chatLog: []
       }
 
     case JOIN_ROOM_SUCCESS:
       return {
         ...state,
         room: action.payload.room,
-        username: action.payload.username
+        username: action.payload.username,
+        chatLog: []
       }
 
     case SET_USERNAME:

@@ -25,10 +25,10 @@ const NexmoClientProvider = ({ children }) => {
     nexmoApp.on('*', (event, evt) => {
       console.log('event: ', event, evt)
       console.log('nexmoApp.activeStreams.length ', nexmoApp.activeStreams.length)
-      const payload = {
+      /* const payload = {
         data: evt
-      }
-      dispatch(updateChatLog(payload))
+      } */
+      // dispatch(updateChatLog(payload))
     })
 
     loginState = LOGIN_DONE

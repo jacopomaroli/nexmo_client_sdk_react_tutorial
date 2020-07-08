@@ -4,7 +4,7 @@ body { height: 100%; }
 #root { display: flex; flex-wrap: wrap; min-height: 100%; }
 #topbar { display: flex; width: 100%; height: 50px; background: #006157; }
 #page { display: flex; width: 100%; height: calc(100vh - 50px); }
-#sidebar { width: 20%; background: #007065; }
+#sidebar { display: flex; flex-direction: column; width: 20%; background: #007065; }
 #main { display: flex; flex-direction: column; flex: 1 0 auto; background: #008073; }
 
 #profilePanelContainer { margin-right: 0; margin-left: auto; position: relative; }
@@ -23,9 +23,9 @@ body { height: 100%; }
 #newRoom { display: flex; box-sizing: border-box; padding: 10px 15px; color: #c0c5c5; }
 #newRoom input { flex: 1 0 auto; background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; font-size: 20px; }
 #newRoom button { background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; cursor: pointer; font-size: 26px; }
-#roomsList{ }
+#roomsList { flex: 1 1 auto; overflow-y: scroll; }
 #roomsList { list-style: none; }
-#roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; }
+#roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #roomsList button:hover { background: #008073; }
 
 #main .roomName { box-sizing: border-box; padding: 10px 10px; font-weight: bold; color: #c0c5c5; font-size: 22px; }

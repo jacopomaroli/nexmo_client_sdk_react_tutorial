@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { setUsername } from '../actions'
+import { useSelector } from 'react-redux'
 import { NexmoClientContext } from './NexmoClient'
 
 function ChatRoom () {

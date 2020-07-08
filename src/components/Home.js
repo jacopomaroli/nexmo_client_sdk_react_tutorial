@@ -4,20 +4,16 @@ import { createRoom, joinRoom, ipCall } from '../actions'
 import ChatRoom from './ChatRoom'
 import { NexmoClientContext } from './NexmoClient'
 
-async function doLogin (nexmoClientContext, token, setUsername, setConversationList) {
+async function doLogin (nexmoClientContext, token, setConversationList) {
   await nexmoClientContext.login(token)
   if (!nexmoClientContext.nexmoClient.application) return
-
-  setUsername(nexmoClientContext.nexmoClient.application.me.name)
 
   const conversationList = nexmoClientContext.nexmoClient.application.conversations
   setConversationList(conversationList)
 }
 
 function Home ({ token }) {
-  const [username, setUsername] = useState('Anonymous')
   const [roomName, setRoomName] = useState('')
-  const [roomId, setRoomId] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(process.env.REACT_APP_NEXMO_PHONE_NUMBER)
   const [conversationList, setConversationList] = useState([])
   const currentRoom = useSelector(state => state.chatReducer.room)
@@ -25,7 +21,7 @@ function Home ({ token }) {
   const dispatch = useDispatch()
 
   const nexmoClientContext = useContext(NexmoClientContext)
-  doLogin(nexmoClientContext, token, setUsername, setConversationList)
+  doLogin(nexmoClientContext, token, setConversationList)
 
   return (
     <div id='page'>
