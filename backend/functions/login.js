@@ -1,4 +1,5 @@
 const { promisify } = require('util')
+const axios = require('axios')
 const jwksClient = require('jwks-rsa')
 const jwt = require('jsonwebtoken')
 
@@ -68,11 +69,39 @@ function getKey (header, callback) {
   })
 }
 
+async function maybeCreateUser (username, privateKey) {
+  const tokenParams = {
+    iss_name: process.env.NEXMO_JTW_ISS_NAME,
+    app_id: process.env.NEXMO_APP_ID,
+    private_key: privateKey,
+    acl: debugACL
+  }
+  const nexmoJWTAdmin = tokenGenerator(tokenParams)
+
+  const config = {
+    headers: { Authorization: `Bearer ${nexmoJWTAdmin}` }
+  }
+  try {
+    const { body: userCreate } = await axios.post('https://api.nexmo.com/beta/users', {
+      name: username,
+      display_name: username,
+      image_url: undefined,
+      channels: undefined,
+      properties: undefined
+    }, config)
+    console.log(userCreate)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 async function main (event, context) {
   const { jwt: token } = JSON.parse(event.body)
   const decoded = await verifyJWT(token, getKey)
 
   const privateKey = Buffer.from(process.env.NEXMO_APP_PRIV_KEY_B64, 'base64').toString('utf-8')
+
+  await maybeCreateUser(decoded.nickname, privateKey)
 
   const tokenParams = {
     iss_name: process.env.NEXMO_JTW_ISS_NAME,
