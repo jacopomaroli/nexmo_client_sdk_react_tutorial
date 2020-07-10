@@ -53,6 +53,12 @@ async function getAuth0Users (auth0Token) {
 async function main (event, context) {
   const { jwt: token } = JSON.parse(event.body)
   const decoded = await verifyJWT(token, getKey)
+  const rolesNamespace = `${process.env.REACT_APP_AUTH0_CLAIM_NAMESPACE}/roles`
+  const isAgent = decoded[rolesNamespace] && decoded[rolesNamespace].includes('Agent')
+  if (!isAgent) {
+    throw new Error('NotAnAgent')
+  }
+
   const auth0ClientSecret = Buffer.from(process.env.AUTH0_CLIENT_SECRET_BACKEND_B64, 'base64').toString('utf-8')
   const { data: { access_token: auth0Token } } = await getAuth0Token(auth0ClientSecret)
   const { data: users } = await getAuth0Users(auth0Token)
@@ -69,6 +75,12 @@ async function gCatcher (event, context) {
     }
   } catch (error) {
     console.log('error', error)
+    if (error.message === 'NotAnAgent') {
+      return {
+        statusCode: 401,
+        body: JSON.stringify(error)
+      }
+    }
     return {
       statusCode: 500,
       body: JSON.stringify(error)
