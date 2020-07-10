@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { createRoom, joinRoom, ipCall } from '../actions'
+import { createRoom, joinRoom, ipCall } from '../redux/chat/actions'
 import ChatRoom from './ChatRoom'
 import { NexmoClientContext } from './NexmoClient'
 
@@ -16,7 +16,7 @@ function Home ({ auth0Token, Auth0User, nexmoToken }) {
   const [roomName, setRoomName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(process.env.REACT_APP_NEXMO_PHONE_NUMBER)
   const [conversationList, setConversationList] = useState([])
-  const currentRoom = useSelector(state => state.chatReducer.room)
+  const currentRoom = useSelector(state => state.chat.room)
 
   const dispatch = useDispatch()
 

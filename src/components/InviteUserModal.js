@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import Async from 'react-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { NexmoClientContext } from './NexmoClient'
-import { hideInviteModal } from '../redux'
-import { inviteUser } from '../actions'
+import { hideInviteModal } from '../redux/ui'
+import { inviteUser } from '../redux/chat/actions'
 
 async function getUsers (auth0Token) {
   const res = await fetch('/.netlify/functions/users', {
@@ -12,15 +12,15 @@ async function getUsers (auth0Token) {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ jwt: auth0Token.auth0Token })
+    body: JSON.stringify({ jwt: auth0Token })
   })
   if (!res.ok) { throw res }
   return res.json()
 }
 
 const InviteUserModal = () => {
-  const auth0Token = useSelector(state => state.UI.auth0Token)
-  const currentRoom = useSelector(state => state.chatReducer.room)
+  const auth0Token = useSelector(state => state.login.auth0Token)
+  const currentRoom = useSelector(state => state.chat.room)
   const dispatch = useDispatch()
   const nexmoClientContext = useContext(NexmoClientContext)
 

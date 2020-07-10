@@ -6,7 +6,7 @@ const initialState = {
   username: null
 }
 
-export default function chatReducer (state, action) {
+export const chatReducer = function (state, action) {
   if (typeof state === 'undefined') {
     return initialState
   }

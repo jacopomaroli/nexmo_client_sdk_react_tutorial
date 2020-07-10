@@ -19,27 +19,13 @@ export const hideInviteModal = () => ({
   type: HIDE_INVITE_MODAL
 })
 
-export const SET_AUTH0_TOKEN = 'SET_AUTH0_TOKEN'
-export const setAuth0Token = (auth0Token) => ({
-  type: SET_AUTH0_TOKEN,
-  auth0Token
-})
-
-export const SET_NEXMO_TOKEN = 'SET_NEXMO_TOKEN'
-export const setNexmoToken = (nexmoToken) => ({
-  type: SET_NEXMO_TOKEN,
-  nexmoToken
-})
-
 // reducers.js
 const initialState = {
   showProfilePanel: false,
-  showInviteUserModal: false,
-  auth0Token: '',
-  nexmoToken: ''
+  showInviteUserModal: false
 }
 
-export const UI = (state = {}, action) => {
+export const UIReducer = (state = {}, action) => {
   if (typeof state === 'undefined') {
     return initialState
   }
@@ -65,12 +51,6 @@ export const UI = (state = {}, action) => {
         ...state,
         showInviteUserModal: false
       }
-    case SET_AUTH0_TOKEN:
-      state.auth0Token = action.auth0Token
-      return state
-    case SET_NEXMO_TOKEN:
-      state.nexmoToken = action.nexmoToken
-      return state
     default:
       return state
   }

@@ -1,13 +1,49 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+* { margin: 0; padding: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+html { height: 100%; }
+body { height: 100%; }
+#root { display: flex; flex-wrap: wrap; min-height: 100%; }
+#topbar { display: flex; width: 100%; height: 50px; background: #006157; }
+#page { display: flex; width: 100%; height: calc(100vh - 50px); }
+#sidebar { display: flex; flex-direction: column; width: 300px; background: #007065; }
+#main { display: flex; flex-direction: column; flex: 1 0 auto; background: #008073; }
+.modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; box-sizing: border-box; padding: 10px; border-radius: 5px; background: #333; color: #c0c5c5; z-index: 999; }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+.modal.getUsers { flex-direction: column; }
+.modal.getUsers .header { margin-bottom: 5px; }
+.modal.getUsers .header .close { margin-left: 5px; background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
+.getUsers .usersListContainer{ }
+.getUsers .usersListContainer ul { list-style: none; }
+.getUsers .usersListContainer ul button { width: 100%; background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; text-align: left; }
+
+#profilePanelContainer { margin-right: 0; margin-left: auto; position: relative; }
+#profilePanelContainer button:hover { background: #007065; }
+#profilePanelToggler { }
+#profilePanelToggler button { height: 50px; background: none; border: none; outline: none; font-weight: bold; color: #c0c5c5; cursor: pointer; }
+#profilePanelToggler button span { width: 150px; display: inline-block; text-overflow: ellipsis; }
+#profilePanelToggler button img { width: 40px; vertical-align: middle; border-radius: 50%; margin-right: 5px; }
+#profilePanel { margin-right: 0; margin-left: auto; position: relative; background: #006157; border-radius: 0 0 0 7px; overflow: hidden; }
+#profilePanel button { display: block; box-sizing: border-box; padding: 10px 5px; text-align: center; width: 100%; background: none; border: none; outline: none; font-weight: bold; color: #c0c5c5; cursor: pointer; }
+#profilePanel button span{ }
+
+#callPhone { display: flex; box-sizing: border-box; padding: 10px 15px; color: #c0c5c5; font: 15px/20px inherit; }
+#callPhone input { flex: 1 0 auto; background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; font-size: 20px; }
+#callPhone button { background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; cursor: pointer; font-size: 26px; }
+#newRoom { display: flex; box-sizing: border-box; padding: 10px 15px; color: #c0c5c5; }
+#newRoom input { flex: 1 0 auto; background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; font-size: 20px; }
+#newRoom button { background: none; border: none; text-decoration: underline; outline: none; color: #c0c5c5; cursor: pointer; font-size: 26px; }
+#roomsList { flex: 1 1 auto; overflow-y: scroll; }
+#roomsList { list-style: none; }
+#roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#roomsList button:hover { background: #008073; }
+
+#main .roomHeader { box-sizing: border-box; padding: 10px 10px; border: 0; border-bottom-width: 1px; border-style: solid; border-image: linear-gradient(to right, #008073 0%, #005c56 20%, #005c56 80%, #008073 100%) 100% 1; }
+#main .roomName { display: block; font-weight: bold; color: #c0c5c5; font-size: 18px; }
+#main .addMemberButton { background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
+#main .historyWrapper { width: 100%; box-sizing: border-box; padding: 10px 10px; overflow-y: scroll; flex: 1 1 auto; display: flex; flex-direction: column-reverse; }
+#main .history { }
+#main .history .historyEvent { color: #c0c5c5; }
+#main .history .historyEvent .username { font-weight: bold; }
+#main .history .historyEvent .message{ }
+#main .control { display: flex; border: 1px solid #00524c; border-radius: 6px; box-sizing: border-box; padding: 10px 10px; margin: 10px; }
+#main .control .msgInput { flex: 1 0 auto; background: none; border: none; outline: none; color: #c0c5c5; }
+#main .control button { background: none; border: none; color: #c0c5c5; cursor: pointer; font-size: 26px; outline: none; }

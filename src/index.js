@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import AppContainer from './App'
+import Login from './components/Login'
 import * as serviceWorker from './serviceWorker'
 import { Auth0Provider } from '@auth0/auth0-react'
 import { NexmoClientProvider } from './components/NexmoClient'
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { store } from './redux/store'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +17,7 @@ ReactDOM.render(
         redirectUri={window.location.origin}
       >
         <NexmoClientProvider>
-          <AppContainer />
+          <Login />
         </NexmoClientProvider>
       </Auth0Provider>
     </Provider>

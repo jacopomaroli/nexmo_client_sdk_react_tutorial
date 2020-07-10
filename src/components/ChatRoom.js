@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NexmoClientContext } from './NexmoClient'
-import { showInviteModal } from '../redux'
+import { showInviteModal } from '../redux/ui'
 
 const rolesNamespace = `${process.env.REACT_APP_AUTH0_CLAIM_NAMESPACE}/roles`
 
 function ChatRoom ({ Auth0User }) {
   const [msgInput, setMsgInput] = useState('')
 
-  const room = useSelector(state => state.chatReducer.room)
-  const username = useSelector(state => state.chatReducer.username)
-  const chats = useSelector(state => state.chatReducer.chatLog)
+  const room = useSelector(state => state.chat.room)
+  const username = useSelector(state => state.chat.username)
+  const chats = useSelector(state => state.chat.chatLog)
 
   const dispatch = useDispatch()
   const msgInputRef = React.createRef()

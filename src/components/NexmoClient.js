@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import NexmoClient from 'nexmo-client'
 import { useDispatch } from 'react-redux'
-import { updateChatLog } from '../actions'
+import { updateChatLog } from '../redux/chat/actions'
 
 const LOGIN_NONE = 'LOGIN_NONE'
 const LOGIN_PENDING = 'LOGIN_PENDING'
