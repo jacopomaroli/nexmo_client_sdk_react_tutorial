@@ -1,14 +1,18 @@
 import React, { useState, useContext } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NexmoClientContext } from './NexmoClient'
+import { showInviteModal } from '../redux'
 
-function ChatRoom () {
+const rolesNamespace = `${process.env.REACT_APP_AUTH0_CLAIM_NAMESPACE}/roles`
+
+function ChatRoom ({ Auth0User }) {
   const [msgInput, setMsgInput] = useState('')
 
   const room = useSelector(state => state.chatReducer.room)
   const username = useSelector(state => state.chatReducer.username)
   const chats = useSelector(state => state.chatReducer.chatLog)
 
+  const dispatch = useDispatch()
   const msgInputRef = React.createRef()
 
   const nexmoClientContext = useContext(NexmoClientContext)
@@ -22,9 +26,15 @@ function ChatRoom () {
     msgInputRef.current.innerHTML = ''
   }
 
+  const isAgent = Auth0User[rolesNamespace] && Auth0User[rolesNamespace].includes('Agent')
+
   return (
     <>
-      <div className='roomName'>{room.name}</div>
+      <div className='roomHeader'>
+        <div className='roomName'>{room.name}</div>
+        {isAgent &&
+          <button className='addMemberButton' onClick={() => dispatch(showInviteModal())}><i className='fa fa-user-plus' aria-hidden='true' /></button>}
+      </div>
       <div className='historyWrapper'>
         <div className='history'>
           {chats.map((c, i) => (

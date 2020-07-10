@@ -36,18 +36,10 @@ const NexmoClientProvider = ({ children }) => {
 
   const selectConversation = (conversation) => {
     conversation.on('text', function (sender, textEvent) {
-      if (textEvent.cid === conversation.id) {
+      console.log(sender)
+      console.log(textEvent)
+      if (textEvent.from !== conversation.me.id) {
         // if (rtc.isVisible) { textEvent.seen(); }
-        // console.log('my message was:', textEvent, sender)
-        /* const payload = {
-          roomId: conversation.id,
-          data: {
-            message: textEvent.body.text,
-            username: sender.user.name
-          }
-        }
-        dispatch(updateChatLog(payload)) */
-      } else {
         // console.log('got a message from another member:', textEvent, sender)
         const payload = {
           roomId: conversation.id,

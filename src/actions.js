@@ -76,12 +76,15 @@ export function joinRoom (nexmoClientContext, roomId) {
       // const conversation = await nexmoClient.application.getConversation(roomId)
       // debugger
       const conversation = Array.from(nexmoClient.application.conversations.values()).find(e => e.name === roomId)
+      let member = conversation.me
+      if (conversation.me.state === 'INVITED') {
+        member = await conversation.join()
+      }
       // if (!conversation) throw new Error('Can\'t find conversation')
       // console.log(conversation)
       // console.log(nexmoClient.application.me)
       // const member = await conversation.join()
       nexmoClientContext.selectConversation(conversation)
-      const member = conversation.me
       // console.log(member)
       const payload = {
         room: {
@@ -152,6 +155,62 @@ export function ipCall (nexmoClient, phoneNumber) {
       dispatch(ipCallSuccess(call))
     } catch (error) {
       dispatch(ipCallError(error))
+    }
+  }
+}
+
+export function getUsers () {
+  return async function (dispatch) {
+    try {
+
+    } catch (error) {
+      // dispatch(ipCallError(error))
+    }
+  }
+}
+
+export const INVITE_USER_REQUEST = 'INVITE_USER_REQUEST'
+export const INVITE_USER_SUCCESS = 'INVITE_USER_SUCCESS'
+export const INVITE_USER_ERROR = 'INVITE_USER_ERROR'
+
+export function inviteUserRequest () {
+  return {
+    type: INVITE_USER_REQUEST
+  }
+}
+
+export function inviteUserSuccess (payload) {
+  return {
+    type: INVITE_USER_SUCCESS,
+    payload
+  }
+}
+
+export function inviteUserError (error) {
+  return {
+    type: INVITE_USER_ERROR,
+    error
+  }
+}
+
+export function inviteUser (nexmoClientContext, room, user) {
+  const nexmoClient = nexmoClientContext.nexmoClient
+  return async function (dispatch) {
+    dispatch(inviteUserRequest())
+    try {
+      await nexmoClient.application.getConversations()
+      const conversation = Array.from(nexmoClient.application.conversations.values()).find(e => e.name === room.name)
+      const member = await conversation.invite({ user_name: user.nickname })
+      const payload = {
+        room: {
+          name: conversation.name,
+          id: conversation.id
+        },
+        username: member.user.name
+      }
+      dispatch(inviteUserSuccess(payload))
+    } catch (error) {
+      dispatch(inviteUserError(error))
     }
   }
 }

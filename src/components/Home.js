@@ -4,15 +4,15 @@ import { createRoom, joinRoom, ipCall } from '../actions'
 import ChatRoom from './ChatRoom'
 import { NexmoClientContext } from './NexmoClient'
 
-async function doLogin (nexmoClientContext, token, setConversationList) {
-  await nexmoClientContext.login(token)
+async function doLogin (nexmoClientContext, nexmoToken, setConversationList) {
+  await nexmoClientContext.login(nexmoToken)
   if (!nexmoClientContext.nexmoClient.application) return
 
   const conversationList = nexmoClientContext.nexmoClient.application.conversations
   setConversationList(conversationList)
 }
 
-function Home ({ token }) {
+function Home ({ auth0Token, Auth0User, nexmoToken }) {
   const [roomName, setRoomName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(process.env.REACT_APP_NEXMO_PHONE_NUMBER)
   const [conversationList, setConversationList] = useState([])
@@ -21,7 +21,7 @@ function Home ({ token }) {
   const dispatch = useDispatch()
 
   const nexmoClientContext = useContext(NexmoClientContext)
-  doLogin(nexmoClientContext, token, setConversationList)
+  doLogin(nexmoClientContext, nexmoToken, setConversationList)
 
   return (
     <div id='page'>
@@ -45,7 +45,7 @@ function Home ({ token }) {
       </div>
       <div id='main'>
         {currentRoom &&
-          <ChatRoom />}
+          <ChatRoom Auth0User={Auth0User} />}
       </div>
     </div>
   )

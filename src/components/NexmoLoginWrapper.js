@@ -23,15 +23,17 @@ class NexmoLoginWrapper extends React.Component {
     return res.json()
   }
 
-  render () {
-    return (
-      <Async promiseFn={this.getNexmoJWT}>
+  /* <Async promiseFn={this.getNexmoJWT}>
         {({ data, err, isLoading }) => {
           if (isLoading) return 'Loading...'
           if (err) return `Something went wrong: ${err.message}`
-          if (data) return <Home token={data.nexmoJWT} />
+          if (data) return <Home Auth0User={this.props.Auth0User} token={data.nexmoJWT} />
         }}
-      </Async>
+      </Async> */
+
+  render () {
+    return (
+      <Home Auth0User={this.props.Auth0User} auth0Token={this.props.auth0Token} nexmoToken={this.props.nexmoToken} />
     )
   }
 }

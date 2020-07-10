@@ -6,6 +6,14 @@ body { height: 100%; }
 #page { display: flex; width: 100%; height: calc(100vh - 50px); }
 #sidebar { display: flex; flex-direction: column; width: 20%; background: #007065; }
 #main { display: flex; flex-direction: column; flex: 1 0 auto; background: #008073; }
+.modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; box-sizing: border-box; padding: 10px; border-radius: 5px; background: #333; color: #c0c5c5; z-index: 999; }
+
+.modal.getUsers { flex-direction: column; }
+.modal.getUsers .header { margin-bottom: 5px; }
+.modal.getUsers .header .close { margin-left: 5px; background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
+.getUsers .usersListContainer{ }
+.getUsers .usersListContainer ul { list-style: none; }
+.getUsers .usersListContainer ul button { width: 100%; background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; text-align: left; }
 
 #profilePanelContainer { margin-right: 0; margin-left: auto; position: relative; }
 #profilePanelContainer button:hover { background: #007065; }
@@ -28,7 +36,9 @@ body { height: 100%; }
 #roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #roomsList button:hover { background: #008073; }
 
-#main .roomName { box-sizing: border-box; padding: 10px 10px; font-weight: bold; color: #c0c5c5; font-size: 22px; }
+#main .roomHeader { box-sizing: border-box; padding: 10px 10px; border: 0; border-bottom-width: 1px; border-style: solid; border-image: linear-gradient(to right, #008073 0%, #005c56 20%, #005c56 80%, #008073 100%) 100% 1; }
+#main .roomName { display: block; font-weight: bold; color: #c0c5c5; font-size: 18px; }
+#main .addMemberButton { background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
 #main .historyWrapper { width: 100%; box-sizing: border-box; padding: 10px 10px; overflow-y: scroll; flex: 1 1 auto; display: flex; flex-direction: column-reverse; }
 #main .history { }
 #main .history .historyEvent { color: #c0c5c5; }
