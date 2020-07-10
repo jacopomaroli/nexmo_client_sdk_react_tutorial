@@ -4,7 +4,7 @@ body { height: 100%; }
 #root { display: flex; flex-wrap: wrap; min-height: 100%; }
 #topbar { display: flex; width: 100%; height: 50px; background: #006157; }
 #page { display: flex; width: 100%; height: calc(100vh - 50px); }
-#sidebar { display: flex; flex-direction: column; width: 20%; background: #007065; }
+#sidebar { display: flex; flex-direction: column; width: 300px; background: #007065; }
 #main { display: flex; flex-direction: column; flex: 1 0 auto; background: #008073; }
 .modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; box-sizing: border-box; padding: 10px; border-radius: 5px; background: #333; color: #c0c5c5; z-index: 999; }
 
