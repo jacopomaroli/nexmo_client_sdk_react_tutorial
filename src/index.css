@@ -34,14 +34,18 @@ body { height: 100%; }
 #roomsList { flex: 1 1 auto; overflow-y: scroll; }
 #roomsList { list-style: none; }
 #roomsList button { padding: 5px 15px; width: 100%; background: none; border: none; outline: none; color: #c0c5c5; cursor: pointer; text-align: left; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#roomsList button:hover { background: #008073; }
+#roomsList button:hover,
+#roomsList button.selected { background: #008073; }
 
 #main .roomHeader { box-sizing: border-box; padding: 10px 10px; border: 0; border-bottom-width: 1px; border-style: solid; border-image: linear-gradient(to right, #008073 0%, #005c56 20%, #005c56 80%, #008073 100%) 100% 1; }
 #main .roomName { display: block; font-weight: bold; color: #c0c5c5; font-size: 18px; }
 #main .addMemberButton { background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
 #main .historyWrapper { width: 100%; box-sizing: border-box; padding: 10px 10px; overflow-y: scroll; flex: 1 1 auto; display: flex; flex-direction: column-reverse; }
 #main .history { }
-#main .history .historyEvent { color: #c0c5c5; }
+#main .history .loadOlder { position: relative; display: flex; justify-content: center; align-items: center; box-sizing: border-box; padding: 10px 0; }
+#main .history .loadOlder::before { position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center; width: 50%; height: 1px; content: ""; box-sizing: border-box; border: 0; border-bottom-width: 1px; border-style: solid; border-image: linear-gradient(to right, #008073 0%, #005c56 20%, #005c56 80%, #008073 100%) 100% 1; }
+#main .history .loadOlder button { z-index: 1; background: #008073; margin: 0 auto; outline: none; color: #c0c5c5; cursor: pointer; font-size: 16px; border: 1px solid #00524c; border-radius: 20px; box-sizing: border-box; padding: 5px 17px; }
+#main .history .historyEvent { color: #c0c5c5; box-sizing: border-box; padding: 5px 0; }
 #main .history .historyEvent .username { font-weight: bold; }
 #main .history .historyEvent .message{ }
 #main .control { display: flex; border: 1px solid #00524c; border-radius: 6px; box-sizing: border-box; padding: 10px 10px; margin: 10px; }

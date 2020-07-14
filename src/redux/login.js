@@ -1,4 +1,10 @@
 // actions.js
+export const SET_AUTH0_CLAIMS = 'SET_AUTH0_CLAIMS'
+export const setAuth0Claims = (auth0Claims) => ({
+  type: SET_AUTH0_CLAIMS,
+  auth0Claims
+})
+
 export const SET_AUTH0_TOKEN = 'SET_AUTH0_TOKEN'
 export const setAuth0Token = (auth0Token) => ({
   type: SET_AUTH0_TOKEN,
@@ -13,6 +19,7 @@ export const setNexmoToken = (nexmoToken) => ({
 
 // reducers.js
 const initialState = {
+  auth0Claims: '',
   auth0Token: '',
   nexmoToken: ''
 }
@@ -23,6 +30,13 @@ export const loginReducer = (state = {}, action) => {
   }
 
   switch (action.type) {
+    case SET_AUTH0_CLAIMS:
+      /* return {
+        ...state,
+        auth0Claims: action.auth0Claims
+      } */
+      state.auth0Claims = action.auth0Claims
+      return state
     case SET_AUTH0_TOKEN:
       /* return {
         ...state,

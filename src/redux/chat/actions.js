@@ -69,33 +69,151 @@ export function joinRoom (nexmoClientContext, roomId) {
   return async function (dispatch) {
     dispatch(joinRoomRequest())
     try {
-      // console.log(nexmoClient.application)
       await nexmoClient.application.getConversations()
-      // const conversations = await nexmoClient.application.getConversations()
-      // console.log(conversations)
-      // const conversation = await nexmoClient.application.getConversation(roomId)
-      // debugger
       const conversation = Array.from(nexmoClient.application.conversations.values()).find(e => e.name === roomId)
       let member = conversation.me
       if (conversation.me.state === 'INVITED') {
         member = await conversation.join()
       }
-      // if (!conversation) throw new Error('Can\'t find conversation')
-      // console.log(conversation)
-      // console.log(nexmoClient.application.me)
-      // const member = await conversation.join()
+      const events = await conversation.getEvents()
+      // console.log(events)
+      const eventsA = Array.from(events.items.keys()).map(e => events.items.get(e))
+      const textEvents = eventsA.filter(e => e.type === 'text')
+      const normalizedTextEvents = textEvents.map(e => {
+        const member = e.conversation.members.get(e.from)
+        const username = member ? member.user.name : 'unknown'
+        return {
+          message: e.body.text,
+          username
+        }
+      })
+      // console.log(normalizedTextEvents)
       nexmoClientContext.selectConversation(conversation)
-      // console.log(member)
       const payload = {
         room: {
           name: conversation.name,
           id: conversation.id
         },
-        username: member.user.name
+        username: member.user.name,
+        chatLogCursor: {
+          next: events.cursor.next
+        },
+        chatLog: normalizedTextEvents
       }
       dispatch(joinRoomSuccess(payload))
     } catch (error) {
       dispatch(joinRoomError(error))
+    }
+  }
+}
+
+export const LOAD_OLDER_REQUEST = 'LOAD_OLDER_REQUEST'
+export const LOAD_OLDER_SUCCESS = 'LOAD_OLDER_SUCCESS'
+export const LOAD_OLDER_ERROR = 'LOAD_OLDER_ERROR'
+
+export function loadOlderRequest () {
+  return {
+    type: LOAD_OLDER_REQUEST
+  }
+}
+
+export function loadOlderSuccess (payload) {
+  return {
+    type: LOAD_OLDER_SUCCESS,
+    payload
+  }
+}
+
+export function loadOlderError (error) {
+  return {
+    type: LOAD_OLDER_ERROR,
+    error
+  }
+}
+
+export function loadOlder (nexmoClientContext, roomId, cursorNext) {
+  const nexmoClient = nexmoClientContext.nexmoClient
+  return async function (dispatch) {
+    dispatch(loadOlderRequest())
+    try {
+      await nexmoClient.application.getConversations()
+      const conversation = Array.from(nexmoClient.application.conversations.values()).find(e => e.name === roomId)
+      const getEventsParams = {
+        cursor: cursorNext
+      }
+      const events = await conversation.getEvents(getEventsParams)
+      // console.log(events)
+      const eventsA = Array.from(events.items.keys()).map(e => events.items.get(e))
+      const textEvents = eventsA.filter(e => e.type === 'text')
+      const normalizedTextEvents = textEvents.map(e => {
+        const member = e.conversation.members.get(e.from)
+        const username = member ? member.user.name : 'unknown'
+        return {
+          message: e.body.text,
+          username
+        }
+      })
+      // console.log(normalizedTextEvents)
+      const payload = {
+        chatLogCursor: {
+          next: events.cursor.next
+        },
+        chatLog: normalizedTextEvents
+      }
+      dispatch(loadOlderSuccess(payload))
+    } catch (error) {
+      dispatch(loadOlderError(error))
+    }
+  }
+}
+
+export const SEND_TEXT_REQUEST = 'SEND_TEXT_REQUEST'
+export const SEND_TEXT_SUCCESS = 'SEND_TEXT_SUCCESS'
+export const SEND_TEXT_ERROR = 'SEND_TEXT_ERROR'
+
+export function sendTextRequest () {
+  return {
+    type: SEND_TEXT_REQUEST
+  }
+}
+
+export function sendTextSuccess (payload) {
+  return {
+    type: SEND_TEXT_SUCCESS,
+    payload
+  }
+}
+
+export function sendTextError (error) {
+  return {
+    type: SEND_TEXT_ERROR,
+    error
+  }
+}
+
+export function sendText (nexmoClientContext, room, message) {
+  const nexmoClient = nexmoClientContext.nexmoClient
+  return async function (dispatch) {
+    dispatch(sendTextRequest())
+    try {
+      await nexmoClient.application.getConversations()
+      const conversation = nexmoClientContext.nexmoClient.application.conversations.get(room.id)
+      let member = conversation.me
+      if (conversation.me.state === 'INVITED') {
+        member = await conversation.join()
+      }
+      const username = member ? member.user.name : 'unknown'
+      const payload = {
+        roomId: conversation.id,
+        data: {
+          username,
+          message
+        }
+      }
+      conversation.sendText(message)
+      dispatch(updateChatLog(payload))
+    } catch (error) {
+      dispatch(sendTextError(error))
     }
   }
 }

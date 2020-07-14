@@ -3,15 +3,9 @@ import { connect } from 'react-redux'
 import Async from 'react-async'
 import { useAuth0 } from '@auth0/auth0-react'
 
-import { setAuth0Token, setNexmoToken } from '../redux/login'
+import { setAuth0Claims, setAuth0Token, setNexmoToken } from '../redux/login'
 
 import App from './App'
-
-async function getAuth0TokenAsync (getIdTokenClaims) {
-  const claims = await getIdTokenClaims()
-  const auth0Token = claims.__raw
-  return auth0Token
-}
 
 async function getNexmoJWT (auth0Token) {
   const res = await fetch('/.netlify/functions/login', {
@@ -27,8 +21,10 @@ async function getNexmoJWT (auth0Token) {
 }
 
 async function getTokens (props, getIdTokenClaims) {
-  const auth0Token = await getAuth0TokenAsync(getIdTokenClaims)
+  const auth0Claims = await getIdTokenClaims()
+  const { __raw: auth0Token } = auth0Claims
   const { nexmoJWT: nexmoToken } = await getNexmoJWT(auth0Token)
+  props.setAuth0Claims(auth0Claims)
   props.setAuth0Token(auth0Token)
   props.setNexmoToken(nexmoToken)
   return { auth0Token, nexmoToken }
@@ -40,7 +36,7 @@ const _Login = (props) => {
     isLoading,
     isAuthenticated,
     error,
-    user,
+    // user,
     loginWithRedirect,
     getIdTokenClaims,
     logout
@@ -59,7 +55,7 @@ const _Login = (props) => {
         {({ data, err, isLoading }) => {
           if (isLoading) return 'Loading...'
           if (err) return `Something went wrong: ${err.message}`
-          if (data) return <App Auth0User={user} logout={logout} />
+          if (data) return <App logout={logout} />
         }}
       </Async>
     )
@@ -73,6 +69,7 @@ const mapStateToPropsLogin = state => ({
 })
 
 const mapDispatchToPropsLogin = {
+  setAuth0Claims,
   setAuth0Token,
   setNexmoToken
 }

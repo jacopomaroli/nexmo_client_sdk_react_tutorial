@@ -12,11 +12,12 @@ async function doLogin (nexmoClientContext, nexmoToken, setConversationList) {
   setConversationList(conversationList)
 }
 
-function Home ({ auth0Token, Auth0User, nexmoToken }) {
+function Home () {
   const [roomName, setRoomName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState(process.env.REACT_APP_NEXMO_PHONE_NUMBER)
   const [conversationList, setConversationList] = useState([])
   const currentRoom = useSelector(state => state.chat.room)
+  const nexmoToken = useSelector(state => state.login.nexmoToken)
 
   const dispatch = useDispatch()
 
@@ -36,16 +37,17 @@ function Home ({ auth0Token, Auth0User, nexmoToken }) {
         </div>
         <ul id='roomsList'>
           {[...conversationList.values()].map(function (conversation, index) {
+            const selected = currentRoom && currentRoom.name === conversation.name ? 'selected' : ''
             return (
               <li key={index}>
-                <button onClick={() => dispatch(joinRoom(nexmoClientContext, conversation.name))}>{conversation.name}</button>
+                <button className={`${selected}`} onClick={() => dispatch(joinRoom(nexmoClientContext, conversation.name))}>{conversation.name}</button>
               </li>)
           })}
         </ul>
       </div>
       <div id='main'>
         {currentRoom &&
-          <ChatRoom Auth0User={Auth0User} />}
+          <ChatRoom />}
       </div>
     </div>
   )

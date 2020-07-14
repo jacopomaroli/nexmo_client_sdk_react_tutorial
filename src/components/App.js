@@ -7,13 +7,19 @@ import { InviteUserModal } from './InviteUserModal'
 import Home from './Home'
 
 const _App = (props) => {
+  const profilePanelContainerBlur = (e) => {
+    if (!e.relatedTarget) {
+      props.hideProfilePanel()
+    }
+  }
+
   return (
     <>
       {props.UI.showInviteUserModal &&
         <InviteUserModal />}
       <div id='topbar'>
         <div
-          id='profilePanelContainer' onBlur={() => props.UI.showProfilePanel && /* props.hideProfilePanel() */ false}
+          id='profilePanelContainer' onBlur={profilePanelContainerBlur}
         >
           <div id='profilePanelToggler'>
             <button
@@ -22,19 +28,19 @@ const _App = (props) => {
                   ? props.hideProfilePanel()
                   : props.showProfilePanel({ showProfilePanel: true })}
             >
-              <span>{props.Auth0User.nickname}</span>
-              <img src={props.Auth0User.picture} alt='useravatar' />
+              <span>{props.login.auth0Claims.nickname}</span>
+              <img src={props.login.auth0Claims.picture} alt='useravatar' />
             </button>
           </div>
           {props.UI.showProfilePanel &&
             <div id='profilePanel'>
-              <button onClick={(e) => { e.stopPropagation(); props.logout({ returnTo: window.location.origin }) }}>
+              <button onClick={(e) => { props.logout({ returnTo: window.location.origin }); props.hideProfilePanel() }}>
                 <span>Log out</span>
               </button>
             </div>}
         </div>
       </div>
-      <Home Auth0User={props.Auth0User} auth0Token={props.login.auth0Token} nexmoToken={props.login.nexmoToken} />
+      <Home />
     </>)
 }
 

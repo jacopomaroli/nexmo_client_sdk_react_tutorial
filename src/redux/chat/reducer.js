@@ -1,8 +1,11 @@
-import { CREATE_ROOM_SUCCESS, JOIN_ROOM_SUCCESS, SET_USERNAME, UPDATE_CHAT_LOG } from './actions'
+import { CREATE_ROOM_SUCCESS, JOIN_ROOM_SUCCESS, LOAD_OLDER_SUCCESS, SET_USERNAME, UPDATE_CHAT_LOG } from './actions'
 
 const initialState = {
   room: null,
   chatLog: [],
+  chatLogCursor: {
+    next: ''
+  },
   username: null
 }
 
@@ -16,7 +19,10 @@ export const chatReducer = function (state, action) {
       return {
         ...state,
         room: action.payload.room,
-        chatLog: []
+        chatLog: [],
+        chatLogCursor: {
+          next: ''
+        }
       }
 
     case JOIN_ROOM_SUCCESS:
@@ -24,7 +30,15 @@ export const chatReducer = function (state, action) {
         ...state,
         room: action.payload.room,
         username: action.payload.username,
-        chatLog: []
+        chatLog: action.payload.chatLog,
+        chatLogCursor: action.payload.chatLogCursor
+      }
+
+    case LOAD_OLDER_SUCCESS:
+      return {
+        ...state,
+        chatLog: [...action.payload.chatLog, ...state.chatLog],
+        chatLogCursor: action.payload.chatLogCursor
       }
 
     case SET_USERNAME:
