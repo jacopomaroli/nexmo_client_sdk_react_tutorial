@@ -60,7 +60,13 @@ const _Login = (props) => {
       </Async>
     )
   } else {
-    return <button onClick={loginWithRedirect}>Log in</button>
+    return (
+      <div id='loginBoxWrapper'>
+        <div id='loginBox'>
+          <button onClick={loginWithRedirect}>Log in</button>
+        </div>
+      </div>
+    )
   }
 }
 

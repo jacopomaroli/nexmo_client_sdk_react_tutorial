@@ -47,7 +47,7 @@ function ChatRoom () {
         <div className='history'>
           <div className='loadOlder'><button onClick={() => dispatch(loadOlder(nexmoClientContext, room.name, chatLogCursor.next))}>Load older</button></div>
           {chats.map((c, i) => (
-            <div className='historyEvent' key={i}>
+            <div className={`historyEvent${c.isSpam ? ' spam' : ''}`} key={i}>
               <div className='username'>{c.username}</div>
               <div className='message' dangerouslySetInnerHTML={{ __html: c.message }} />
             </div>

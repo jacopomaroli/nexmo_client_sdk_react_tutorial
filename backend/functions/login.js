@@ -30,20 +30,17 @@ function tokenGenerator (params) {
 
 const debugACL = {
   paths: {
-    '/v1/users/**': {},
-    '/v1/conversations/**': {},
-    '/v1/sessions/**': {},
-    '/v1/devices/**': {},
-    '/v1/image/**': {},
-    '/v3/media/**': {},
-    '/v1/applications/**': {},
-    '/v1/push/**': {},
-    '/v1/knocking/**': {},
-    '/v1/calls/**': {},
-    '/v1/legs/**': {},
-    '/v2/users/**': {},
-    '/v2/conversations/**': {},
-    '/v2/legs/**': {}
+    '/*/users/**': {},
+    '/*/conversations/**': {},
+    '/*/sessions/**': {},
+    '/*/devices/**': {},
+    '/*/image/**': {},
+    '/*/media/**': {},
+    '/*/applications/**': {},
+    '/*/push/**': {},
+    '/*/knocking/**': {},
+    '/*/calls/**': {},
+    '/*/legs/**': {}
   }
 }
 
@@ -55,6 +52,25 @@ const client = jwksClient({
   timeout: 30000 // Defaults to 30s
   // proxy: '[protocol]://[username]:[pass]@[address]:[port]', // Optional
 })
+
+const getReqLog = (resObj) => {
+  const config = {
+    url: resObj.config.url,
+    method: resObj.config.method,
+    data: resObj.config.data,
+    headers: resObj.config.headers
+  }
+  const request = {
+    method: resObj.request.method,
+    path: resObj.request.path
+  }
+  const response = {
+    status: resObj.response.status,
+    statusText: resObj.response.statusText,
+    data: resObj.response.data
+  }
+  return { config, request, response }
+}
 
 const verifyJWT = promisify(jwt.verify)
 
@@ -89,9 +105,9 @@ async function maybeCreateUser (username, privateKey) {
       channels: undefined,
       properties: undefined
     }, config)
-    console.log(userCreate)
+    console.log(JSON.stringify(getReqLog(userCreate), false, 2))
   } catch (e) {
-    console.log(e)
+    console.log(JSON.stringify(getReqLog(e), false, 2))
   }
 }
 

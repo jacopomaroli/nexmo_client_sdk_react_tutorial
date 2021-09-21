@@ -2,6 +2,7 @@ import React, { createContext } from 'react'
 import NexmoClient from 'nexmo-client'
 import { useDispatch } from 'react-redux'
 import { updateChatLog } from '../redux/chat/actions'
+import { Sphamlet } from '../redux/chat/sphamlet'
 
 const LOGIN_NONE = 'LOGIN_NONE'
 const LOGIN_PENDING = 'LOGIN_PENDING'
@@ -55,6 +56,9 @@ const NexmoClientProvider = ({ children }) => {
 
   if (!nexmoClient) {
     nexmoClient = new NexmoClient({ debug: false })
+    nexmoClient.sphamlet = new Sphamlet()
+    // TODO: async mehtod. improve loading consistency
+    nexmoClient.sphamlet.loadModel()
     nexmoClientContext = {
       nexmoClient,
       login,

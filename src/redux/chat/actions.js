@@ -87,6 +87,9 @@ export function joinRoom (nexmoClientContext, roomId) {
           username
         }
       })
+      for (let i = 0; i < normalizedTextEvents.length; i++) {
+        normalizedTextEvents[i].isSpam = await nexmoClientContext.nexmoClient.sphamlet.predict(normalizedTextEvents[i].message)
+      }
       // console.log(normalizedTextEvents)
       nexmoClientContext.selectConversation(conversation)
       const payload = {
@@ -149,10 +152,13 @@ export function loadOlder (nexmoClientContext, roomId, cursorNext) {
         const member = e.conversation.members.get(e.from)
         const username = member ? member.user.name : 'unknown'
         return {
-          message: e.body.text,
-          username
+          username,
+          message: e.body.text
         }
       })
+      for (let i = 0; i < normalizedTextEvents.length; i++) {
+        normalizedTextEvents[i].isSpam = await nexmoClientContext.nexmoClient.sphamlet.predict(normalizedTextEvents[i].message)
+      }
       // console.log(normalizedTextEvents)
       const payload = {
         chatLogCursor: {
@@ -210,6 +216,8 @@ export function sendText (nexmoClientContext, room, message) {
           message
         }
       }
+      payload.data.isSpam = await nexmoClientContext.nexmoClient.sphamlet.predict(payload.data.message)
+      console.log(payload.data.isSpam)
       conversation.sendText(message)
       dispatch(updateChatLog(payload))
     } catch (error) {

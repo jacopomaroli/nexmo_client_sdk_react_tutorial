@@ -15,6 +15,9 @@ body { height: 100%; }
 .getUsers .usersListContainer ul { list-style: none; }
 .getUsers .usersListContainer ul button { width: 100%; background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; text-align: left; }
 
+#loginBoxWrapper { display: flex; flex: 1; justify-content: space-around; flex-wrap: wrap; padding: 50px 10px 10px; }
+#loginBox { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 300px; }
+
 #profilePanelContainer { margin-right: 0; margin-left: auto; position: relative; }
 #profilePanelContainer button:hover { background: #007065; }
 #profilePanelToggler { }
@@ -41,11 +44,14 @@ body { height: 100%; }
 #main .roomName { display: block; font-weight: bold; color: #c0c5c5; font-size: 18px; }
 #main .addMemberButton { background: none; border: none; outline: none; color: #c0c5c5; font-size: 16px; cursor: pointer; }
 #main .historyWrapper { width: 100%; box-sizing: border-box; padding: 10px 10px; overflow-y: scroll; flex: 1 1 auto; display: flex; flex-direction: column-reverse; }
+.historyWrapper::-webkit-scrollbar * { background: transparent; }
+.historyWrapper::-webkit-scrollbar-thumb { background: #999 !important; }
 #main .history { }
 #main .history .loadOlder { position: relative; display: flex; justify-content: center; align-items: center; box-sizing: border-box; padding: 10px 0; }
 #main .history .loadOlder::before { position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center; width: 50%; height: 1px; content: ""; box-sizing: border-box; border: 0; border-bottom-width: 1px; border-style: solid; border-image: linear-gradient(to right, #008073 0%, #005c56 20%, #005c56 80%, #008073 100%) 100% 1; }
 #main .history .loadOlder button { z-index: 1; background: #008073; margin: 0 auto; outline: none; color: #c0c5c5; cursor: pointer; font-size: 16px; border: 1px solid #00524c; border-radius: 20px; box-sizing: border-box; padding: 5px 17px; }
-#main .history .historyEvent { color: #c0c5c5; box-sizing: border-box; padding: 5px 0; }
+#main .history .historyEvent { position: relative; color: #c0c5c5; box-sizing: border-box; padding: 5px 0; }
+#main .history .historyEvent.spam::after { content: ""; position: absolute; top: 0; right: 0; width: 24px; height: 24px; background-image: url("/spam.png"); background-repeat: no-repeat; background-size: cover; }
 #main .history .historyEvent .username { font-weight: bold; }
 #main .history .historyEvent .message{ }
 #main .control { display: flex; border: 1px solid #00524c; border-radius: 6px; box-sizing: border-box; padding: 10px 10px; margin: 10px; }
